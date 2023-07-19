@@ -4,6 +4,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -11,6 +13,8 @@ import android.view.animation.RotateAnimation
 import android.widget.Button
 import android.widget.Switch
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -31,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         button = findViewById(R.id.button2)
         textView = findViewById(R.id.textView)
         button.text = "Click Me"
+        setSupportActionBar(findViewById(R.id.topAppBar))
     }
 
     fun onButtonClicked(v: View) {
@@ -51,6 +56,31 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+    }
+
+    // Inflating the menu items from the menu_items.xml file
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    // Handling the click events of the menu items
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Switching on the item id of the menu item
+        when (item.itemId) {
+            R.id.about_item -> {
+                // Code to be executed when the add button is clicked
+                val title = "Info"
+                val message = "Test App By Kiarash"
+
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle(title)
+                builder.setMessage(message)
+                builder.create().show()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
